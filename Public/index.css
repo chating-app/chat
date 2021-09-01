@@ -8,6 +8,10 @@ html,
 body {
   height: 100%;
   font-family: "Roboto", sans-serif;
+  background-image: url('./cover2.jpg');
+  background-size: contain;
+  
+  
 }
 #video-grid {
   display: flex;
@@ -140,4 +144,39 @@ video {
   border: 1px grey solid;
   border-radius: 10px;
   padding: 10px;
+}
+.btn{
+  padding: 15px;
+    position: absolute;
+    color: #c33a3a;
+    background-color: #e5cfc4;
+    font-size: 19px;
+    border-radius: 12%;
+    margin-left: 842px;
+    margin-top: 369px;
+    font-weight: bolder;
+
+}
+h1{
+  color: #82594c;
+    /* text-align: center; */
+    margin-top: 28px;
+    margin-left: 190px;
+    font-family: 'Courier New', Courier, monospace;
+}
+h2{
+  color: #82594c;
+    /* text-align: center; */
+    margin-left: 150px;
+    font-family: 'Courier New', Courier, monospace;
+}
+.chat-label{
+  color: #a12525;
+  font-weight: bolder;
+}
+.chat-submit{
+  color: #9c3f3f;
+  border-radius: 10%;
+  font-weight: bolder;
+
 }
