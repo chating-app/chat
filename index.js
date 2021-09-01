@@ -8,8 +8,8 @@ const io = require('socket.io')(server,{
   },
 })
 const path = require('path')
-const cors= require('cors')
-app.use(express.static(path.join(__dirname + '/Public')))
+const cors= require('cors');
+app.use(express.static(path.join(__dirname + '/Public')));
 app.use(cors())
 
 
