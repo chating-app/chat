@@ -1,29 +1,37 @@
-const express = require('express')
-const app = express()
-const server = require('http').createServer(app)
-const port = process.env.PORT || 3000
-const io = require('socket.io')(server,{
-  cors: {
-    origin: '*',
-  },
-})
-const path = require('path');
-const cors= require('cors');
-app.use(express.static(path.join(__dirname + '/Public')));
-app.use(cors())
-
-
-io.on('connection', socket => {
-  console.log('Some client connected');
-  socket.on('chat', message => {
-    console.log('From client: ', message);
-    io.emit('chat', message)
+const express = require("express");
+const app = express();
+const server = require("http").Server(app);
+const { v4: uuidv4 } = require("uuid");
+const io = require("socket.io")(server, {
+  cors: { origin: "*" },
+});
+const path = require("path");
+const cors = require("cors");
+app.use(express.static(path.join(__dirname + "/Public")));
+app.use(cors());
+// Peer
+const { ExpressPeerServer } = require("peer");
+const peerServer = ExpressPeerServer(server, {
+  debug: true,
+});
+app.set("view engine", "ejs");
+app.use(express.static("Public"));
+app.use("/peerjs", peerServer);
+app.get("/", (req, rsp) => {
+  rsp.redirect(`/${uuidv4()}`);
+});
+app.get("/:room", (req, res) => {
+  res.render("room", { roomId: req.params.room });
+});
+io.on("connection", (socket) => {
+  console.log("Some client connected");
+  socket.on("chat", (message) => {
+    console.log("From client: ", message);
+    io.emit("chat", message);
   });
-})
-// just to test the server
-app.get('/', (req, res) => {
-  res.status(200).send('Working')
-})
-server.listen(port, () => {
-  console.log(`Server running on port: ${port}`)
-})
+  // socket.on("join-room", (roomId, userId) => {
+  //   socket.join(roomId);
+  //   socket.to(roomId).broadcast.emit("user-connected", userId);
+  // });
+});
+server.listen(process.env.PORT || 3030);
