@@ -34,4 +34,4 @@ io.on("connection", (socket) => {
   //   socket.to(roomId).broadcast.emit("user-connected", userId);
   // });
 });
-server.listen(process.env.PORT || 3030);
+server.listen(process.env.PORT || 3000);
