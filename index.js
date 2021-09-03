@@ -29,6 +29,12 @@ io.on("connection", (socket) => {
     console.log("From client: ", message);
     io.emit("chat", message);
   });
+  socket.on("videoChat", (vidMessage) => {
+    console.log("videoChat From client: ", vidMessage);
+    io.emit("videoChat", vidMessage);
+  });
+
+
   // socket.on("join-room", (roomId, userId) => {
   //   socket.join(roomId);
   //   socket.to(roomId).broadcast.emit("user-connected", userId);
