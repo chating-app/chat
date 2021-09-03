@@ -8,9 +8,13 @@ const Input = document.querySelector(".chat-input");
 chat.addEventListener("submit", (event) => {
   event.preventDefault();
   socket.emit("chat", Input.value);
+  
   Input.value = "";
   socket.on("chat", (message) => {
     console.log("From server: ", message);
+  });
+  socket.on("videoChat", (vidMessage) => {
+    console.log("From server: ", vidMessage);
   });
   const chatWindow = document.querySelector(".chat-window");
   const renderMessage = (message) => {
@@ -22,7 +26,19 @@ chat.addEventListener("submit", (event) => {
   socket.on("chat", (message) => {
     renderMessage(message);
   });
+  // const rendervidMessage = (vidMessage) => {
+  //   const div1 = document.createElement("div");
+  //   div1.classList.add("render-vidMessage");
+  //   div1.innerText = vidMessage;
+  //   chatWindow.appendChild(div1);
+  // };
+  // socket.on("videoChat", (vidMessage) => {
+  //   rendervidMessage(vidMessage);
+  // });
 });
+
+
+
 const videoFunction = () => {
   var peer = new Peer(undefined, {
     path: "/peerjs",
@@ -71,8 +87,14 @@ const videoFunction = () => {
     videoEl.srcObject = stream;
     videoEl.addEventListener("loadedmetadata", () => {
       videoEl.play();
+      // socket.emit("videoChat", videoEl.value);
+
     });
     videoGrid.append(videoEl);
+    socket.emit("videoChat", videoGrid);
+
+    // let vEle = document.getElementsByTagName("video")
+    // socket.emit("videoChat", vEle.videoGrid);
     let totalUsers = document.getElementsByTagName("video").length;
     if (totalUsers > 1) {
       for (let index = 0; index < totalUsers; index++) {
